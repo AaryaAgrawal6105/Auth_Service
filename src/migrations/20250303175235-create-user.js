@@ -14,7 +14,7 @@ module.exports = {
         allowNull : false ,
         unique : true,
         validate : {
-          isemail : true,
+          isEmail : true,
         },
       },
       password: {
