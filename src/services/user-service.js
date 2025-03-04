@@ -27,9 +27,27 @@ class UserService{
         }
 
     }
+    async signIn(email , password){
+        try{
+            const user = await this.userRepository.getByEmail(email);
+            const passwordsMatch = this.checkPassword(password , user.password);
+            if(!passwordsMatch){
+                console.log('the passwords do not match');
+                throw ({error : 'passwords do not match'})
+            }
+            const newJWT = this.createToken({email : user.email , id : user.id});
+            return newJWT; 
+        }
+        catch(error){
+            console.log('unable to signIn');
+            throw {error};
+        }
+    }
+
+
     createToken(user){
         try{
-            const result = jwt.sign(user , JWT_KEY  , {expireIn : '1h'} );
+            const result = jwt.sign(user , JWT_KEY  , {expiresIn : '1h'} );
             return result; 
         }
         catch(error){
