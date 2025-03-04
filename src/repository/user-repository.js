@@ -29,6 +29,7 @@ class UserRepository{
             const user = await User.findByPk(userId , {
                 attributes : ['email' , 'id'],
             })
+            return user;
         }
         catch(error){
             throw {error};

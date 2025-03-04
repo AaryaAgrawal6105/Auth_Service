@@ -1,12 +1,20 @@
-const express  = require('express')
+const express = require('express')
 const UserController = require('../../controllers/user-controller')
-const router= express.Router();
-const {AuthRequestValidator} = require('../../middlewares/index')
+const router = express.Router();
+const { AuthRequestValidator } = require('../../middlewares/index')
 
-router.post('/signup' ,AuthRequestValidator.validateUserAuth
-    ,
-      UserController.create)
-router.post('/signin' , AuthRequestValidator.validateUserAuth
-    ,UserController.signIn) 
+router.post('/signup',
+    AuthRequestValidator.validateUserAuth,
+    UserController.create)
+router.post('/signin',
+    AuthRequestValidator.validateUserAuth,
+    UserController.signIn)
 
-module.exports = router ;
+
+router.get('/isAuthenticated' , UserController.isAuthenticated)
+    router.get('/dummy' , (req ,res) => {
+        return res.status(200).json({
+            message : 'everything looks cool'
+        })
+    } )
+module.exports = router;

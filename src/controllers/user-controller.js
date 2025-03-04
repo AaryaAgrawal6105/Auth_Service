@@ -68,9 +68,33 @@ const create =  async (req , res ) =>{
 //         })
 //     }
 // }
+ const isAuthenticated = async (req , res) =>{
+
+    try{
+        const token = req.header('x-access-token');
+        const response = await userService.isAuthenticated(token);
+        return res.status(200).json({
+            success : true,
+            data:response ,
+            err :{},
+            message :'token is valid'
+        })
+    }
+    catch(error){
+                return res.status(500).json({
+                    data : false ,
+                    message : "Failed to validate the token of a user" ,
+                    success : false ,
+                    err : {error}
+        
+                })
+            }
+
+ }
 
 module.exports = {
     create, 
     // destroy
-    signIn
+    signIn,
+    isAuthenticated
 }
