@@ -17,4 +17,7 @@ router.get('/isAuthenticated' , UserController.isAuthenticated)
             message : 'everything looks cool'
         })
     } )
+
+router.get('/isAdmin' ,AuthRequestValidator.validateIsAdminRequest, UserController.isAdmin)
+
 module.exports = router;

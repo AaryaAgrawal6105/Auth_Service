@@ -1,4 +1,4 @@
-const { User } = require('../models/index.js'); 
+const { User , role } = require('../models/index.js'); 
 
 class UserRepository{
     async create(data){
@@ -44,6 +44,21 @@ class UserRepository{
         }
         catch(error){
             throw {error};
+        }
+    }
+    async isAdmin(userId){
+        try{
+            const user = await User.findByPk(userId);
+            const adminRole = await role.findOne({
+                where :{
+                    name  : 'Admin'
+                }
+            })
+            console.log(adminRole)  
+            return user.hasRole(adminRole)
+        }
+        catch(error){
+            throw{error};   
         }
     }
 }
